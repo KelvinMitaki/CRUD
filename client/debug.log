@@ -1,0 +1,4 @@
+[0311/221947.684:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[0311/221947.697:ERROR:process_reader_win.cc(123)] NtOpenThread: An invalid Client ID was specified. (0xc000000b)
+[0311/221948.099:ERROR:exception_snapshot_win.cc(98)] thread ID 7200 not found in process
+[0311/221948.099:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
