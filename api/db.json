@@ -1,0 +1,42 @@
+{
+  "streams": [
+    {
+      "title": "test stream 1",
+      "description": "this is a test stream",
+      "id": 1
+    },
+    {
+      "title": "test stream 2",
+      "description": "this is another stream",
+      "id": 2
+    },
+    {
+      "title": "Streams ",
+      "description": "Push update added on postStream action",
+      "id": 3
+    },
+    {
+      "title": "button",
+      "description": "testing the create stream button",
+      "userId": "117944623330773414865",
+      "id": 5
+    },
+    {
+      "title": "edit stream",
+      "description": "fixed the patch action",
+      "userId": "117944623330773414865",
+      "id": 6
+    },
+    {
+      "title": "edit",
+      "description": "edit fixed",
+      "id": 8
+    },
+    {
+      "title": "edit 2",
+      "description": "buttons not showing fixed",
+      "userId": "117944623330773414865",
+      "id": 9
+    }
+  ]
+}
