@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import GoogleAuth from "./GoogleAuth";
+import { Link } from "react-router-dom";
+
 export class Header extends Component {
   render() {
     return (
@@ -9,13 +10,12 @@ export class Header extends Component {
           <Link to="/" className="item">
             Streamy
           </Link>
-
           <div className="right menu">
-            <Link to="/" className="ui item">
-              All Streams
-            </Link>
-            <GoogleAuth />
+            <div className="item">
+              <Link to="/">All Streams</Link>
+            </div>
           </div>
+          <GoogleAuth />
         </div>
       </div>
     );

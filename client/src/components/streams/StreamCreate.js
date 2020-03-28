@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import { postStream } from "../../actions";
 import { connect } from "react-redux";
+import { postStream } from "../../actions";
 import StreamForm from "./StreamForm";
+import { Redirect } from "react-router-dom";
 export class StreamCreate extends Component {
-  onFormSubmit = formValues => {
+  onSubmit = formValues => {
     this.props.postStream(formValues, this.props.userId);
   };
   render() {
-    return (
-      <div>
-        <StreamForm onSubmit={this.onFormSubmit} />
-      </div>
-    );
+    if (!this.props.userId) {
+      return <Redirect to="/" />;
+    }
+    return <StreamForm onSubmit={this.onSubmit} />;
   }
 }
 
@@ -20,5 +20,4 @@ const mapStateToProps = state => {
     userId: state.auth.userId
   };
 };
-
 export default connect(mapStateToProps, { postStream })(StreamCreate);

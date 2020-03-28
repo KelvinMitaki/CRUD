@@ -10,7 +10,7 @@ export class StreamShow extends Component {
       const { title, description } = this.props.stream;
       return (
         <div>
-          <h3>{title}</h3>
+          <h2>{title}</h2>
           <p>{description}</p>
         </div>
       );

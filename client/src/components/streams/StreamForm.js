@@ -8,20 +8,20 @@ export class StreamForm extends Component {
       return null;
     }
   };
-  renderInput = formProps => {
+  renderInput = props => {
     const className = `field ${
-      formProps.meta.error && formProps.meta.touched ? "error" : ""
+      props.meta.error && props.meta.touched ? "error" : ""
     }`;
     return (
       <div className={className}>
-        <label>{formProps.label}</label>
-        <input type="text" {...formProps.input} />
-        {this.renderErrors(formProps.meta)}
+        <label>{props.label}</label>
+        <input type="text" {...props.input} />
+        {this.renderErrors(props.meta)}
       </div>
     );
   };
   onFormSubmit = formValues => {
-    this.props.onSubmit(formValues, this.props.userId);
+    this.props.onSubmit(formValues);
   };
   render() {
     return (
@@ -33,14 +33,14 @@ export class StreamForm extends Component {
             component={this.renderInput}
             label="Description"
           />
-          <button className="ui primary button">Submit</button>
+          <button className="ui button primary">Submit</button>
         </form>
       </div>
     );
   }
 }
 const validate = formValues => {
-  const errors = {};
+  let errors = {};
   if (!formValues.title) {
     errors.title = "You must enter a title";
   }
@@ -49,7 +49,6 @@ const validate = formValues => {
   }
   return errors;
 };
-
 export default reduxForm({
   form: "StreamForm",
   validate

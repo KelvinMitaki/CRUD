@@ -20,7 +20,6 @@ export const postStream = (formValues, userId) => {
     history.push("/");
   };
 };
-
 export const fetchStreams = () => {
   return async dispatch => {
     const response = await streams.get("/streams");
@@ -34,7 +33,6 @@ export const fetchStream = id => {
     dispatch({ type: "FETCH_STREAM", payload: response.data });
   };
 };
-
 export const editStream = (formValues, id, userId) => {
   return async dispatch => {
     const response = await streams.put(`/streams/${id}`, {
@@ -45,6 +43,7 @@ export const editStream = (formValues, id, userId) => {
     history.push("/");
   };
 };
+
 export const deleteStream = id => {
   return async dispatch => {
     await streams.delete(`/streams/${id}`);
