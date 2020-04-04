@@ -2,63 +2,71 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchStreams } from "../../actions";
 import { Link } from "react-router-dom";
+import history from "../history";
 export class StreamList extends Component {
   componentDidMount() {
     this.props.fetchStreams();
   }
-  renderAuthButtons = (userId, id) => {
-    if (this.props.currentUserId === userId) {
-      return (
-        <div className="right floated content">
-          <Link to={`/streams/delete/${id}`} className="ui button negative">
-            Delete
-          </Link>
-          <Link to={`/streams/edit/${id}`} className="ui button primary">
-            Edit
-          </Link>
-        </div>
-      );
-    }
-  };
-  renderCreateStreamButton = () => {
-    if (this.props.isSignedIn) {
-      return (
-        <Link to="/streams/new" className="ui primary button">
-          Create Stream
-        </Link>
-      );
-    }
-  };
   renderStreams = () => {
-    return this.props.streams.map(stream => {
-      return (
-        <div key={stream.id} className="item">
-          {this.renderAuthButtons(stream.userId, stream.id)}
-          <i className="large camera middle aligned icon" />
-          <div className="content">
-            <Link to={`/streams/show/${stream.id}`} className="header">
-              {stream.title}
-            </Link>
-            <div className="description">{stream.description}</div>
+    if (this.props.streams) {
+      return this.props.streams.map((stream) => {
+        return (
+          <div key={stream.id} className="item">
+            {this.props.userId === stream.userId ? (
+              <div>
+                <div className="right floated content">
+                  <Link
+                    to={`/streams/edit/${stream.id}`}
+                    className="ui button primary"
+                  >
+                    EDIT
+                  </Link>
+                </div>
+                <div className="right floated content">
+                  <Link
+                    to={`/streams/delete/${stream.id}`}
+                    className="ui button negative"
+                  >
+                    DELETE
+                  </Link>
+                </div>
+              </div>
+            ) : null}
+
+            <i className="ui camera big icon" />
+            <div className="content">
+              <Link to={`/streams/show/${stream.id}`} className="header">
+                {stream.title}
+              </Link>
+              {stream.description}
+            </div>
           </div>
-        </div>
-      );
-    });
+        );
+      });
+    } else {
+      return null;
+    }
   };
   render() {
     return (
       <div>
         <div className="ui celled list">{this.renderStreams()}</div>
-        {this.renderCreateStreamButton()}
+        {this.props.userId ? (
+          <button
+            onClick={() => history.push("/streams/new")}
+            className="ui primary button"
+          >
+            Create New
+          </button>
+        ) : null}
       </div>
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     streams: Object.values(state.streams),
-    currentUserId: state.auth.userId,
-    isSignedIn: state.auth.isSignedIn
+    userId: state.auth.userId,
   };
 };
 export default connect(mapStateToProps, { fetchStreams })(StreamList);

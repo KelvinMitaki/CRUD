@@ -1,46 +1,50 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 export class StreamForm extends Component {
-  renderErrors = ({ error, touched }) => {
-    if (error && touched) {
-      return <div className="ui error message">{error}</div>;
+  renderErrors = (errors, touched) => {
+    if (errors && touched) {
+      return <div className="ui error message">{errors}</div>;
     } else {
       return null;
     }
   };
-  renderInput = props => {
+  renderInput = (formProps) => {
     const className = `field ${
-      props.meta.error && props.meta.touched ? "error" : ""
+      formProps.meta.error && formProps.meta.touched ? "error" : ""
     }`;
     return (
       <div className={className}>
-        <label>{props.label}</label>
-        <input type="text" {...props.input} />
-        {this.renderErrors(props.meta)}
+        <label>{formProps.label}</label>
+        <input type="text" {...formProps.input} />
+        {this.renderErrors(formProps.meta.error, formProps.meta.touched)}
       </div>
     );
   };
-  onFormSubmit = formValues => {
+  onSubmit = (formValues) => {
     this.props.onSubmit(formValues);
   };
   render() {
     return (
-      <div className="ui form error">
-        <form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
+      <div>
+        <form
+          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          className="ui form error"
+        >
           <Field name="title" component={this.renderInput} label="Title" />
           <Field
             name="description"
             component={this.renderInput}
             label="Description"
           />
-          <button className="ui button primary">Submit</button>
+          <button className="ui primary button">Submit</button>
         </form>
       </div>
     );
   }
 }
-const validate = formValues => {
-  let errors = {};
+
+const validate = (formValues) => {
+  const errors = {};
   if (!formValues.title) {
     errors.title = "You must enter a title";
   }
@@ -51,5 +55,5 @@ const validate = formValues => {
 };
 export default reduxForm({
   form: "StreamForm",
-  validate
+  validate,
 })(StreamForm);

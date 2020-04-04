@@ -1,37 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchStream, editStream } from "../../actions";
+import { editStream, fetchStreams } from "../../actions";
 import StreamForm from "./StreamForm";
-import { Redirect } from "react-router-dom";
 export class StreamEdit extends Component {
   componentDidMount() {
-    this.props.fetchStream(this.props.match.params.id);
+    this.props.fetchStreams();
   }
-
-  onFormSubmit = formValues => {
-    this.props.editStream(
-      formValues,
-      this.props.match.params.id,
-      this.props.stream.userId
-    );
+  onSubmit = (formValues) => {
+    this.props.editStream(formValues, this.props.match.params.id);
   };
   render() {
     if (this.props.stream) {
-      if (!this.props.stream.userId) {
-        return <Redirect to="/" />;
-      } else {
-        return (
-          <div>
-            <StreamForm
-              initialValues={{
-                title: this.props.stream.title,
-                description: this.props.stream.description
-              }}
-              onSubmit={this.onFormSubmit}
-            />
-          </div>
-        );
-      }
+      const { title, description } = this.props.stream;
+      return (
+        <div>
+          <StreamForm
+            initialValues={{ title: title, description: description }}
+            onSubmit={this.onSubmit}
+          />
+        </div>
+      );
     } else {
       return null;
     }
@@ -39,9 +27,9 @@ export class StreamEdit extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    stream: state.streams[ownProps.match.params.id]
+    stream: state.streams[ownProps.match.params.id],
   };
 };
-export default connect(mapStateToProps, { fetchStream, editStream })(
+export default connect(mapStateToProps, { editStream, fetchStreams })(
   StreamEdit
 );

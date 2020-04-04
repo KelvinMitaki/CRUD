@@ -1,37 +1,30 @@
-import React from "react";
 import ReactDOM from "react-dom";
+import React, { Component } from "react";
 import history from "./history";
-class Modal extends React.Component {
-  render() {
+
+export class Modal extends Component {
+  renderPortal = () => {
     return ReactDOM.createPortal(
-      <div
-        onClick={() => history.push("/")}
-        className="ui dimmer modals visible active"
-      >
+      <div>
         <div
-          onClick={e => e.stopPropagation()}
-          className="ui standard modal visible active"
+          onClick={() => history.push("/")}
+          className="ui dimmer modals visible active"
         >
-          <div className="header">Delete Stream</div>
-          <div className="content">{this.props.content}</div>
-          <div className="actions">
-            <div
-              onClick={this.props.onButtonClick}
-              className="ui primary button"
-            >
-              {this.props.delete}
-            </div>
-            <div
-              onClick={() => history.push("/")}
-              className="ui negative button"
-            >
-              {this.props.cancel}
-            </div>
+          <div
+            onClick={(event) => event.stopPropagation()}
+            className="ui standard modal visible active"
+          >
+            <div className="header">{this.props.header}</div>
+            <div className="content">{this.props.title}</div>
+            <div className="actions">{this.props.renderActions}</div>
           </div>
         </div>
       </div>,
       document.querySelector("#modal")
     );
+  };
+  render() {
+    return <div>{this.renderPortal()}</div>;
   }
 }
 

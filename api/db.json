@@ -31,6 +31,24 @@
       "description": "Not sign in test",
       "userId": "117944623330773414865",
       "id": 6
+    },
+    {
+      "title": "My streams",
+      "description": "checking if my streams are working correctly",
+      "userId": "117944623330773414865",
+      "id": 7
+    },
+    {
+      "title": "fixed action",
+      "description": "replaced put with patch",
+      "userId": "117944623330773414865",
+      "id": 11
+    },
+    {
+      "title": "Stream added",
+      "description": "Stream Added via My Streams",
+      "userId": "117944623330773414865",
+      "id": 12
     }
   ]
 }

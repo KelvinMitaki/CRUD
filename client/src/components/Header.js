@@ -1,19 +1,23 @@
 import React, { Component } from "react";
-import GoogleAuth from "./GoogleAuth";
 import { Link } from "react-router-dom";
+import GoogleAuth from "./GoogleAuth";
+import { connect } from "react-redux";
 
 export class Header extends Component {
   render() {
     return (
       <div>
-        <div className="ui secondary pointing menu">
+        <div className="ui pointing menu">
           <Link to="/" className="item">
             Streamy
           </Link>
+
           <div className="right menu">
-            <div className="item">
-              <Link to="/">All Streams</Link>
-            </div>
+            {this.props.userId ? (
+              <Link to={`/streams/user/${this.props.userId}`} className="item">
+                My Streams
+              </Link>
+            ) : null}
           </div>
           <GoogleAuth />
         </div>
@@ -21,5 +25,9 @@ export class Header extends Component {
     );
   }
 }
-
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    userId: state.auth.userId,
+  };
+};
+export default connect(mapStateToProps)(Header);
