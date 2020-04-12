@@ -9,12 +9,12 @@ export class StreamsUser extends Component {
   }
   renderUserStreams = () => {
     const results = this.props.streams.filter((stream) => {
-      return stream.userId === this.props.userId;
+      return stream.userId === this.props.currentUser.userId;
     });
     return results.map((stream) => {
       return (
         <div key={stream.id} className="item">
-          {this.props.userId === stream.userId ? (
+          {this.props.currentUser.userId === stream.userId ? (
             <div>
               <div className="right floated content">
                 <Link
@@ -47,7 +47,7 @@ export class StreamsUser extends Component {
     });
   };
   render() {
-    if (this.props.streams && this.props.userId) {
+    if (this.props.streams && this.props.currentUser) {
       return (
         <div>
           <div className="ui celled list">{this.renderUserStreams()}</div>;
@@ -62,7 +62,7 @@ export class StreamsUser extends Component {
     } else {
       return (
         <div>
-          {this.props.userId ? (
+          {this.props.currentUser ? (
             <div>
               <h2>No Streams Available, Please start adding streams</h2>
               <button
@@ -83,7 +83,7 @@ export class StreamsUser extends Component {
 const mapStateToProps = (state) => {
   return {
     streams: Object.values(state.streams),
-    userId: state.auth.userId,
+    currentUser: state.auth.currentUser,
   };
 };
 export default connect(mapStateToProps, { fetchStreams })(StreamsUser);

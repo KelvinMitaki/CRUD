@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchStreams } from "../../actions";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import history from "../history";
 export class StreamList extends Component {
   componentDidMount() {
     this.props.fetchStreams();
   }
   renderStreams = () => {
-    if (this.props.streams) {
+    if (this.props.streams && this.props.currentUser) {
       return this.props.streams.map((stream) => {
         return (
           <div key={stream.id} className="item">
-            {this.props.userId === stream.userId ? (
+            {this.props.currentUser.userId === stream.userId ? (
               <div>
                 <div className="right floated content">
                   <Link
@@ -51,14 +51,16 @@ export class StreamList extends Component {
     return (
       <div>
         <div className="ui celled list">{this.renderStreams()}</div>
-        {this.props.userId ? (
+        {this.props.currentUser ? (
           <button
             onClick={() => history.push("/streams/new")}
             className="ui primary button"
           >
             Create New
           </button>
-        ) : null}
+        ) : (
+          <Redirect to="/streams/signin" />
+        )}
       </div>
     );
   }
@@ -66,7 +68,7 @@ export class StreamList extends Component {
 const mapStateToProps = (state) => {
   return {
     streams: Object.values(state.streams),
-    userId: state.auth.userId,
+    currentUser: state.auth.currentUser,
   };
 };
 export default connect(mapStateToProps, { fetchStreams })(StreamList);

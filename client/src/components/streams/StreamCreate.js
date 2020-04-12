@@ -4,7 +4,7 @@ import { postStream } from "../../actions";
 import StreamForm from "./StreamForm";
 export class StreamCreate extends Component {
   onSubmit = (formValues) => {
-    this.props.postStream(formValues, this.props.userId);
+    this.props.postStream(formValues, this.props.currentUser.userId);
   };
   render() {
     return (
@@ -16,7 +16,7 @@ export class StreamCreate extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    userId: state.auth.userId,
+    currentUser: state.auth.currentUser,
   };
 };
 export default connect(mapStateToProps, { postStream })(StreamCreate);

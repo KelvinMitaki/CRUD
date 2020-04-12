@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import GoogleAuth from "./GoogleAuth";
 import { connect } from "react-redux";
+import { auth } from "./firebase/Firebase";
+import history from "./history";
 
 export class Header extends Component {
   render() {
@@ -13,13 +15,27 @@ export class Header extends Component {
           </Link>
 
           <div className="right menu">
-            {this.props.userId ? (
-              <Link to={`/streams/user/${this.props.userId}`} className="item">
-                My Streams
-              </Link>
+            {this.props.currentUser ? (
+              <React.Fragment>
+                <Link
+                  to={`/streams/user/${this.props.currentUser.userId}`}
+                  className="item"
+                >
+                  My Streams
+                </Link>
+                <button
+                  onClick={() => {
+                    history.replace("/streams/signin");
+
+                    return auth.signOut();
+                  }}
+                  className="ui google plus button"
+                >
+                  Log Out
+                </button>
+              </React.Fragment>
             ) : null}
           </div>
-          <GoogleAuth />
         </div>
       </div>
     );
@@ -27,7 +43,7 @@ export class Header extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    userId: state.auth.userId,
+    currentUser: state.auth.currentUser,
   };
 };
 export default connect(mapStateToProps)(Header);

@@ -47,3 +47,10 @@ export const deleteStream = (id) => {
     history.push("/");
   };
 };
+
+export const setCurrentUser = (user) => {
+  return {
+    type: "SET_CURRENT_USER",
+    payload: user,
+  };
+};
