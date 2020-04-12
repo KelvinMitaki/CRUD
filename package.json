@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "react-scripts build",
     "deploy": "gh-pages -d build"
   },
   "homepage": "https://KelvinMitaki.github.io/CRUD",
   "author": "kevoh",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "gh-pages": "^2.2.0"
+  }
 }
